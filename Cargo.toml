@@ -1,0 +1,30 @@
+[package]
+name = "printcraft-iced"
+description = "PrintCraft's design language, rebuilt as a minimal iced application"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+# The toolkit. PrintCraft ships an egui/eframe shell (crates/ui-egui);
+# this demo keeps the same design tokens and information architecture but
+# renders them with iced instead.
+iced = { version = "0.14", features = ["svg", "advanced", "debug", "smol"] }
+
+# The same companion crates PrintCraft uses around its toolkit.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+log = "0.4"
+env_logger = "0.11"
+rfd = "0.17"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
