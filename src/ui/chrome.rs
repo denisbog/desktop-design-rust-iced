@@ -1,6 +1,6 @@
 //! Window chrome: the tab strip and the mode bar, with its menus.
 
-use iced::widget::{button, column, container, row, text};
+use iced::widget::{button, center_y, column, container, row, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding};
 
 use crate::app::{App, LeftPanel, Message, Mode};
@@ -79,14 +79,14 @@ fn tab<'a>(app: &App, t: Tokens, index: usize, doc: &crate::app::Doc) -> Element
         doc.display_name().to_string()
     };
 
-    let select = button(
+    let select = button(center_y(
         row![
             icons::icon::<Message>("file-text", 14.0, if active { t.accent } else { t.text_muted }),
             text(name).font(theme::regular()).size(13.0).line_height(1.2).color(fg),
         ]
         .spacing(7.0)
         .align_y(Alignment::Center),
-    )
+    ))
     .padding(Padding { top: 0.0, right: 2.0, bottom: 0.0, left: 8.0 })
     .height(Length::Fixed(30.0))
     .on_press(Message::SelectTab(Some(index)))

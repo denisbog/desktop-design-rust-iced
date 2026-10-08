@@ -5,7 +5,7 @@
 //! like the built-in widgets. Hover and press feedback comes from iced's `button` status, which
 //! keeps every widget keyboard- and accessibility-aware for free.
 
-use iced::widget::{button, column, container, row, scrollable, space, text, tooltip, Scrollable};
+use iced::widget::{button, center_y, column, container, row, scrollable, space, text, tooltip, Scrollable};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow};
 
 use crate::icons;
@@ -119,7 +119,9 @@ pub fn ghost_button<'a, Message: Clone + 'a>(
     ]
     .spacing(6.0)
     .align_y(Alignment::Center);
-    button(content)
+    // iced's `Button` parks its content at the padding's top-left corner, so a button taller
+    // than its content would top-align the label; `center_y` puts it back on the midline.
+    button(center_y(content))
         .padding(Padding { top: 5.0, right: 10.0, bottom: 5.0, left: 6.0 })
         .height(Length::Fixed(30.0))
         .on_press(on_press)
@@ -191,7 +193,7 @@ pub fn search_box<'a, Message: Clone + 'a>(
     ]
     .spacing(8.0)
     .align_y(Alignment::Center);
-    button(content)
+    button(center_y(content))
         .padding(Padding { top: 0.0, right: 12.0, bottom: 0.0, left: 10.0 })
         .width(Length::Fixed(width))
         .height(Length::Fixed(32.0))
